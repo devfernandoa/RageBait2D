@@ -39,16 +39,22 @@ public class PlayerMovement : MonoBehaviour
     public float tracerFadeDuration = 0.5f; // Time in seconds for the tracer to fade out
     private float tracerSpawnTimer;
 
+    private SpriteRenderer playerSpriteRenderer; // Reference to the player's SpriteRenderer
+
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         groundCheck = transform.Find("GroundCheck"); // Create an empty GameObject for ground checking
+
+        // Get the player's SpriteRenderer component
+        playerSpriteRenderer = GetComponent<SpriteRenderer>();
     }
 
     void Update()
     {
         HandleJump();
         HandleDash();
+        HandleOpacity();
     }
 
     void FixedUpdate()
@@ -206,6 +212,29 @@ public class PlayerMovement : MonoBehaviour
                 tracerFade.fadeDuration = tracerFadeDuration;
             }
         }
+    }
+
+    void HandleOpacity()
+    {
+        // Set the player's opacity based on their state
+        if (!isGrounded && !canDash)
+        {
+            // Player is in the air and can't dash: set opacity to 75%
+            SetPlayerOpacity(0.75f);
+        }
+        else
+        {
+            // Player is on the ground or can dash: set opacity to 100%
+            SetPlayerOpacity(1f);
+        }
+    }
+
+    void SetPlayerOpacity(float alpha)
+    {
+        // Update the player's sprite color with the new alpha value
+        Color color = playerSpriteRenderer.color;
+        color.a = alpha;
+        playerSpriteRenderer.color = color;
     }
 
     private void OnDrawGizmosSelected()

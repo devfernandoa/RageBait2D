@@ -158,7 +158,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 14.25, y: -45.45}
+  m_AnchoredPosition: {x: 14.25, y: -46.3}
   m_SizeDelta: {x: 20, y: 10}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &95468040
@@ -181,7 +181,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: And X to dash
+  m_text: 'And X to dash,
+
+    while on the air'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -18457,11 +18459,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6664084494483404501, guid: 8aacb7edf09201f4fbd0995ad37b3c33, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -5.6
+      value: -11.1
       objectReference: {fileID: 0}
     - target: {fileID: 6664084494483404501, guid: 8aacb7edf09201f4fbd0995ad37b3c33, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 128.2
+      value: -2.8
       objectReference: {fileID: 0}
     - target: {fileID: 6664084494483404501, guid: 8aacb7edf09201f4fbd0995ad37b3c33, type: 3}
       propertyPath: m_LocalPosition.z
@@ -18554,7 +18556,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8261237430023436981, guid: 7b0a1dc87fc01eb4f8b67df9e449bcec, type: 3}
       propertyPath: m_ClearFlags
-      value: 2
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 8261237430023436981, guid: 7b0a1dc87fc01eb4f8b67df9e449bcec, type: 3}
       propertyPath: m_BackGroundColor.b
@@ -18566,6 +18568,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8261237430023436981, guid: 7b0a1dc87fc01eb4f8b67df9e449bcec, type: 3}
       propertyPath: m_BackGroundColor.r
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8348067543564855151, guid: 7b0a1dc87fc01eb4f8b67df9e449bcec, type: 3}
+      propertyPath: m_CameraType
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8391741862250781543, guid: 7b0a1dc87fc01eb4f8b67df9e449bcec, type: 3}
