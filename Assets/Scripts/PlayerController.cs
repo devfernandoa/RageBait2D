@@ -19,6 +19,7 @@ public class PlayerMovement : MonoBehaviour
     [Header("Dash Settings")]
     public float dashSpeed = 20f; // Speed of the dash
     public float dashDuration = 0.2f; // How long the dash lasts
+    public float maxHorizontalSpeed = 15f; // Maximum horizontal speed after dashing
     private bool isDashing = false;
     private bool canDash = true;
     private float dashTimeLeft; // Timer for dash duration
@@ -135,8 +136,12 @@ public class PlayerMovement : MonoBehaviour
     void StopDash()
     {
         isDashing = false;
-        rb.linearVelocity = Vector2.zero; // Stop the dash abruptly
         rb.gravityScale = 5; // Restore gravity (or your original gravity scale)
+
+        // Preserve horizontal momentum after dashing
+        float horizontalVelocity = rb.linearVelocity.x;
+        horizontalVelocity = Mathf.Clamp(horizontalVelocity, -maxHorizontalSpeed, maxHorizontalSpeed); // Clamp to max speed
+        rb.linearVelocity = new Vector2(horizontalVelocity, rb.linearVelocity.y);
     }
 
     private void OnDrawGizmosSelected()
