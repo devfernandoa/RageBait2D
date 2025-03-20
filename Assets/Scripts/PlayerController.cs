@@ -20,6 +20,7 @@ public class PlayerMovement : MonoBehaviour
     public float dashSpeed = 20f; // Speed of the dash
     public float dashDuration = 0.2f; // How long the dash lasts
     public float maxHorizontalSpeed = 15f; // Maximum horizontal speed after dashing
+    public float maxVerticalSpeed = 15f;
     private bool isDashing = false;
     private bool canDash = true;
     private float dashTimeLeft; // Timer for dash duration
@@ -57,6 +58,16 @@ public class PlayerMovement : MonoBehaviour
             float moveInput = Input.GetAxisRaw("Horizontal");
             float targetVelocity = moveInput * moveSpeed;
             rb.linearVelocity = new Vector2(Mathf.SmoothDamp(rb.linearVelocity.x, targetVelocity, ref velocityXSmoothing, accelerationTime), rb.linearVelocity.y);
+        }
+
+        // Max speed clamping for vertical
+        if (rb.linearVelocity.y > maxVerticalSpeed)
+        {
+            rb.linearVelocity = new Vector2(rb.linearVelocity.x, maxVerticalSpeed);
+        }
+        else if (rb.linearVelocity.y < -maxVerticalSpeed)
+        {
+            rb.linearVelocity = new Vector2(rb.linearVelocity.x, -maxVerticalSpeed);
         }
     }
 
@@ -161,6 +172,7 @@ public class PlayerMovement : MonoBehaviour
 
         // Preserve vertical momentum if moving downward (to allow sliding)
         float verticalVelocity = rb.linearVelocity.y;
+        verticalVelocity = Mathf.Clamp(verticalVelocity, -maxVerticalSpeed, maxVerticalSpeed); // Clamp to max speed
         if (verticalVelocity < 0)
         {
             verticalVelocity = Mathf.Min(verticalVelocity, -1f); // Ensure the player doesn't stick to the ground
