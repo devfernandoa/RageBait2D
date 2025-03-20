@@ -215,7 +215,10 @@ MonoBehaviour:
   jumpBufferTime: 0.1
   dashSpeed: 25
   dashDuration: 0.15
+  maxHorizontalSpeed: 15
   accelerationTime: 0.05
+  tracerPrefab: {fileID: 7074901983246758787, guid: 2ade03e1669a49c4e8c7fbf762e7472a, type: 3}
+  tracerSpawnInterval: 0.05
 --- !u!1 &1345435599467203123
 GameObject:
   m_ObjectHideFlags: 0

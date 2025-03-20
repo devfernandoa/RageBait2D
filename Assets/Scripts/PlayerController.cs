@@ -31,6 +31,13 @@ public class PlayerMovement : MonoBehaviour
     private bool isGrounded;
     private Transform groundCheck;
 
+    [Header("Tracer Settings")]
+    public GameObject tracerPrefab; // Prefab for the tracer effect
+    public float tracerSpawnInterval = 0.05f; // Time between spawning tracers
+    public float tracerHeightVariation = 0.2f; // Random height variation for tracers
+    public float tracerFadeDuration = 0.5f; // Time in seconds for the tracer to fade out
+    private float tracerSpawnTimer;
+
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -110,6 +117,16 @@ public class PlayerMovement : MonoBehaviour
             {
                 StopDash();
             }
+
+            // Spawn tracers at regular intervals
+            tracerSpawnTimer -= Time.deltaTime;
+            if (tracerSpawnTimer <= 0)
+            {
+                SpawnTracer();
+                SpawnTracer();
+                SpawnTracer();
+                tracerSpawnTimer = tracerSpawnInterval;
+            }
         }
     }
 
@@ -141,7 +158,42 @@ public class PlayerMovement : MonoBehaviour
         // Preserve horizontal momentum after dashing
         float horizontalVelocity = rb.linearVelocity.x;
         horizontalVelocity = Mathf.Clamp(horizontalVelocity, -maxHorizontalSpeed, maxHorizontalSpeed); // Clamp to max speed
-        rb.linearVelocity = new Vector2(horizontalVelocity, rb.linearVelocity.y);
+
+        // Preserve vertical momentum if moving downward (to allow sliding)
+        float verticalVelocity = rb.linearVelocity.y;
+        if (verticalVelocity < 0)
+        {
+            verticalVelocity = Mathf.Min(verticalVelocity, -1f); // Ensure the player doesn't stick to the ground
+        }
+
+        rb.linearVelocity = new Vector2(horizontalVelocity, verticalVelocity);
+    }
+
+    void SpawnTracer()
+    {
+        if (tracerPrefab != null)
+        {
+            // Randomize the vertical position of the tracer
+            float randomHeight = Random.Range(-tracerHeightVariation, tracerHeightVariation);
+            Vector3 spawnPosition = transform.position + new Vector3(0, randomHeight, 0);
+
+            // Instantiate the tracer
+            GameObject tracer = Instantiate(tracerPrefab, spawnPosition, Quaternion.identity);
+
+            // Rotate the tracer to match the player's direction
+            float playerDirection = Mathf.Sign(rb.linearVelocity.x); // 1 for right, -1 for left
+            if (playerDirection != 0) // Only rotate if the player is moving horizontally
+            {
+                tracer.transform.localScale = new Vector3(playerDirection, 1, 1);
+            }
+
+            // Set the fade duration for the tracer
+            TracerFade tracerFade = tracer.GetComponent<TracerFade>();
+            if (tracerFade != null)
+            {
+                tracerFade.fadeDuration = tracerFadeDuration;
+            }
+        }
     }
 
     private void OnDrawGizmosSelected()
