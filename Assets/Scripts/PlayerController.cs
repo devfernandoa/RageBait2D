@@ -88,47 +88,65 @@ public class PlayerMovement : MonoBehaviour
     {
         currentHeight = transform.position.y;
 
+        // Check if the player has stopped falling (vertical velocity is close to zero)
+        bool hasStoppedFalling = Mathf.Abs(rb.linearVelocity.y) < 0.1f;
+
         // Determine the current height zone
         if (currentHeight < heightB)
         {
             if (currentZone != "A")
             {
-                currentZone = "A";
-                AudioManager.Instance.PlayLoopA();
+                // Handle transitions into zone A
+                if (hasStoppedFalling)
+                {
+                    if (currentZone == "B")
+                    {
+                        AudioManager.Instance.PlayBtoA();
+                    }
+                    else if (currentZone == "C")
+                    {
+                        AudioManager.Instance.PlayCtoA();
+                    }
+
+                    currentZone = "A";
+                }
             }
         }
         else if (currentHeight < heightC)
         {
             if (currentZone != "B")
             {
-                currentZone = "B";
-                AudioManager.Instance.PlayLoopB();
+                // Handle transitions into zone B
+                if (hasStoppedFalling)
+                {
+                    if (currentZone == "A")
+                    {
+                        AudioManager.Instance.PlayAtoB();
+                    }
+                    else if (currentZone == "C")
+                    {
+                        AudioManager.Instance.PlayCtoB();
+                    }
+
+                    currentZone = "B";
+                }
             }
         }
         else
         {
             if (currentZone != "C")
             {
-                currentZone = "C";
-                AudioManager.Instance.PlayLoopC();
-            }
-        }
+                // Handle transitions into zone C
+                if (hasStoppedFalling)
+                {
+                    if (currentZone == "B")
+                    {
+                        AudioManager.Instance.PlayBtoC();
+                    }
 
-        // Handle falling transitions
-        if (currentHeight < heightA && currentZone != "A")
-        {
-            currentZone = "A";
-            AudioManager.Instance.PlayCtoA();
-        }
-        else if (currentHeight < heightB && currentZone == "C")
-        {
-            currentZone = "B";
-            AudioManager.Instance.PlayCtoB();
-        }
-        else if (currentHeight < heightA && currentZone == "B")
-        {
-            currentZone = "A";
-            AudioManager.Instance.PlayBtoA();
+                    currentZone = "C";
+                }
+            }
         }
     }
 
