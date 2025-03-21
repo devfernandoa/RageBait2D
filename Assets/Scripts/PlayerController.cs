@@ -2,6 +2,12 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
+    [Header("Height Zones")]
+    public float heightA = 0f; // Height for zone A
+    public float heightB = 10f; // Height for zone B
+    public float heightC = 20f; // Height for zone C
+    private float currentHeight;
+    private string currentZone;
     [Header("Movement Settings")]
     public float moveSpeed = 8f; // Horizontal movement speed
     public float jumpForce = 12f; // Jump force
@@ -55,6 +61,7 @@ public class PlayerMovement : MonoBehaviour
         HandleJump();
         HandleDash();
         HandleOpacity();
+        HandleHeight();
     }
 
     void FixedUpdate()
@@ -76,6 +83,55 @@ public class PlayerMovement : MonoBehaviour
             rb.linearVelocity = new Vector2(rb.linearVelocity.x, -maxVerticalSpeed);
         }
     }
+
+    void HandleHeight()
+    {
+        currentHeight = transform.position.y;
+
+        // Determine the current height zone
+        if (currentHeight < heightB)
+        {
+            if (currentZone != "A")
+            {
+                currentZone = "A";
+                AudioManager.Instance.PlayLoopA();
+            }
+        }
+        else if (currentHeight < heightC)
+        {
+            if (currentZone != "B")
+            {
+                currentZone = "B";
+                AudioManager.Instance.PlayLoopB();
+            }
+        }
+        else
+        {
+            if (currentZone != "C")
+            {
+                currentZone = "C";
+                AudioManager.Instance.PlayLoopC();
+            }
+        }
+
+        // Handle falling transitions
+        if (currentHeight < heightA && currentZone != "A")
+        {
+            currentZone = "A";
+            AudioManager.Instance.PlayCtoA();
+        }
+        else if (currentHeight < heightB && currentZone == "C")
+        {
+            currentZone = "B";
+            AudioManager.Instance.PlayCtoB();
+        }
+        else if (currentHeight < heightA && currentZone == "B")
+        {
+            currentZone = "A";
+            AudioManager.Instance.PlayBtoA();
+        }
+    }
+
 
     void HandleJump()
     {
