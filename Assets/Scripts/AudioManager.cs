@@ -88,58 +88,39 @@ public class AudioManager : MonoBehaviour
 
     public void PlayAtoB()
     {
-        if (!isTransitioning)
-        {
-            PlayTransition(AtoB, LoopB);
-        }
+        PlayTransition(AtoB, LoopB);
     }
 
     public void PlayBtoC()
     {
-        if (!isTransitioning)
-        {
-            PlayTransition(BtoC, LoopC);
-        }
+        PlayTransition(BtoC, LoopC);
     }
 
     public void PlayCtoB()
     {
-        if (!isTransitioning)
-        {
-            PlayTransition(CtoB, LoopB);
-        }
+        PlayTransition(CtoB, LoopB);
     }
 
     public void PlayBtoA()
     {
-        if (!isTransitioning)
-        {
-            PlayTransition(BtoA, LoopA);
-        }
+        PlayTransition(BtoA, LoopA);
     }
 
     public void PlayCtoA()
     {
-        if (!isTransitioning)
-        {
-            PlayTransition(CtoA, LoopA);
-        }
+        PlayTransition(CtoA, LoopA);
     }
 
     private void PlayTransition(AudioClip transitionClip, AudioClip loopClip)
     {
-        if (!isTransitioning)
-        {
-            StartCoroutine(HandleTransition(transitionClip, loopClip));
-        }
+        StartCoroutine(HandleTransition(transitionClip, loopClip));
     }
 
     private IEnumerator HandleTransition(AudioClip transitionClip, AudioClip loopClip)
     {
         isTransitioning = true;
 
-        // If a transition clip is provided, play it first
-        if (transitionClip != null)
+        if (transitionClip == Intro)
         {
             // Determine which transition source to use
             AudioSource transitionSource = transitionSource1.clip == null ? transitionSource1 : transitionSource2;
@@ -149,25 +130,44 @@ public class AudioManager : MonoBehaviour
             transitionSource.loop = false;
             transitionSource.Play();
 
-            // Preload the next loop clip into the primary source
-            primarySource.clip = loopClip;
-            primarySource.loop = true;
+            yield return StartCoroutine(SmallFade(primarySource, transitionSource));
+
+            PreLoadLoops(transitionClip);
+
+            primarySource.Play();
+
+            // Wait for the transition clip to finish
+            yield return new WaitForSeconds(transitionClip.length - (smallFadeDuration * 8));
+
+            // Small fade: Lower the transition source volume and increase the primary source volume
+            yield return StartCoroutine(SmallFade(transitionSource, primarySource));
+
+            // Preload the next possible transitions
+            PreloadTransitions(loopClip);
+        }
+        // If a transition clip is provided, play it first
+        else if (transitionClip != null)
+        {
+            // Determine which transition source to use
+            AudioSource transitionSource = transitionSource1.clip == null ? transitionSource1 : transitionSource2;
+
+            // Start the transition clip
+            transitionSource.clip = transitionClip;
+            transitionSource.loop = false;
+            transitionSource.Play();
+
+            PreLoadLoops(transitionClip);
+            primarySource.volume = 0;
+            primarySource.Play();
 
             // Small fade: Lower the primary source volume and increase the transition source volume
             yield return StartCoroutine(SmallFade(primarySource, transitionSource));
 
             // Wait for the transition clip to finish
-            yield return new WaitForSeconds(transitionClip.length);
+            yield return new WaitForSeconds(transitionClip.length - (smallFadeDuration * 4));
 
             // Small fade: Lower the transition source volume and increase the primary source volume
             yield return StartCoroutine(SmallFade(transitionSource, primarySource));
-
-            // Stop the transition source and reset its clip
-            transitionSource.Stop();
-            transitionSource.clip = null;
-
-            // Play the loop clip on the primary source
-            primarySource.Play();
 
             // Preload the next possible transitions
             PreloadTransitions(loopClip);
@@ -220,6 +220,35 @@ public class AudioManager : MonoBehaviour
         {
             transitionSource1.clip = CtoB;
             transitionSource2.clip = CtoA;
+        }
+    }
+
+    private void PreLoadLoops(AudioClip transitionClip)
+    {
+        if (transitionClip == AtoB)
+        {
+            primarySource.clip = LoopB;
+            primarySource.loop = true;
+        }
+        else if (transitionClip == BtoC)
+        {
+            primarySource.clip = LoopC;
+            primarySource.loop = true;
+        }
+        else if (transitionClip == CtoB)
+        {
+            primarySource.clip = LoopB;
+            primarySource.loop = true;
+        }
+        else if (transitionClip == BtoA)
+        {
+            primarySource.clip = LoopA;
+            primarySource.loop = true;
+        }
+        else if (transitionClip == CtoA || transitionClip == Intro)
+        {
+            primarySource.clip = LoopA;
+            primarySource.loop = true;
         }
     }
 }

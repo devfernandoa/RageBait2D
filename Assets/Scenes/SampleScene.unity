@@ -13207,7 +13207,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: cc1e830816e027045897214e7cb80e72, type: 3}
   m_Resource: {fileID: 8300000, guid: cc1e830816e027045897214e7cb80e72, type: 3}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 0
@@ -13316,7 +13316,7 @@ MonoBehaviour:
   primarySource: {fileID: 1538021619}
   transitionSource1: {fileID: 1538021622}
   transitionSource2: {fileID: 1538021623}
-  fadeDuration: 0
+  smallFadeDuration: 0.1
 --- !u!4 &1538021621
 Transform:
   m_ObjectHideFlags: 0
@@ -13342,9 +13342,9 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 0}
-  m_Resource: {fileID: 0}
-  m_PlayOnAwake: 1
+  m_audioClip: {fileID: 8300000, guid: 901ff79500550eb44bc1ab80a6af68ea, type: 3}
+  m_Resource: {fileID: 8300000, guid: 901ff79500550eb44bc1ab80a6af68ea, type: 3}
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 0
@@ -13439,9 +13439,9 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 0}
-  m_Resource: {fileID: 0}
-  m_PlayOnAwake: 1
+  m_audioClip: {fileID: 8300000, guid: aadac2a27f256e04faa38d35c078f1c5, type: 3}
+  m_Resource: {fileID: 8300000, guid: aadac2a27f256e04faa38d35c078f1c5, type: 3}
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 0
