@@ -260,23 +260,39 @@ public class PlayerMovement : MonoBehaviour
 
         rb.linearVelocity = new Vector2(horizontalVelocity, verticalVelocity);
     }
-
     void SpawnTracer()
     {
         if (tracerPrefab != null)
         {
-            // Randomize the vertical position of the tracer
-            float randomHeight = Random.Range(-tracerHeightVariation, tracerHeightVariation);
-            Vector3 spawnPosition = transform.position + new Vector3(0, randomHeight, 0);
+            Vector3 spawnPosition = transform.position;
 
             // Instantiate the tracer
             GameObject tracer = Instantiate(tracerPrefab, spawnPosition, Quaternion.identity);
+
+            // Get the player's sprite renderer to compare sizes
+            SpriteRenderer playerSprite = GetComponent<SpriteRenderer>();
+            SpriteRenderer tracerSprite = tracer.GetComponent<SpriteRenderer>();
+
+            if (playerSprite != null && tracerSprite != null)
+            {
+                // Calculate the scale needed to match the player's size
+                Vector3 newScale = tracer.transform.localScale;
+                newScale.x = (playerSprite.bounds.size.x / tracerSprite.bounds.size.x) * Mathf.Sign(newScale.x);
+                newScale.y = playerSprite.bounds.size.y / tracerSprite.bounds.size.y;
+
+                // Apply the scale
+                tracer.transform.localScale = newScale / 50f;
+            }
 
             // Rotate the tracer to match the player's direction
             float playerDirection = Mathf.Sign(rb.linearVelocity.x); // 1 for right, -1 for left
             if (playerDirection != 0) // Only rotate if the player is moving horizontally
             {
-                tracer.transform.localScale = new Vector3(playerDirection, 1, 1);
+                // We already handled x scale above, so just flip the existing scale
+                tracer.transform.localScale = new Vector3(
+                    Mathf.Abs(tracer.transform.localScale.x) * playerDirection,
+                    tracer.transform.localScale.y,
+                    tracer.transform.localScale.z);
             }
 
             // Set the fade duration for the tracer

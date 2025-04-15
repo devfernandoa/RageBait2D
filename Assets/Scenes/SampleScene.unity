@@ -18841,6 +18841,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 318473835747738582, guid: 8aacb7edf09201f4fbd0995ad37b3c33, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -1
+      objectReference: {fileID: 0}
     - target: {fileID: 648311556813395052, guid: 8aacb7edf09201f4fbd0995ad37b3c33, type: 3}
       propertyPath: m_Name
       value: Player
@@ -18852,6 +18856,10 @@ PrefabInstance:
     - target: {fileID: 4921866806066479321, guid: 8aacb7edf09201f4fbd0995ad37b3c33, type: 3}
       propertyPath: m_Color.a
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5087427827750000466, guid: 8aacb7edf09201f4fbd0995ad37b3c33, type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6452272694383765952, guid: 8aacb7edf09201f4fbd0995ad37b3c33, type: 3}
       propertyPath: heightA
@@ -18940,7 +18948,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5418609429552483647, guid: 7b0a1dc87fc01eb4f8b67df9e449bcec, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: -9.13
       objectReference: {fileID: 0}
     - target: {fileID: 5418609429552483647, guid: 7b0a1dc87fc01eb4f8b67df9e449bcec, type: 3}
       propertyPath: m_LocalPosition.y
@@ -18997,6 +19005,10 @@ PrefabInstance:
     - target: {fileID: 8348067543564855151, guid: 7b0a1dc87fc01eb4f8b67df9e449bcec, type: 3}
       propertyPath: m_CameraType
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8348067543564855151, guid: 7b0a1dc87fc01eb4f8b67df9e449bcec, type: 3}
+      propertyPath: m_RenderPostProcessing
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8391741862250781543, guid: 7b0a1dc87fc01eb4f8b67df9e449bcec, type: 3}
       propertyPath: player
