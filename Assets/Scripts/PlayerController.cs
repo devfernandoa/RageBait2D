@@ -66,7 +66,7 @@ public class PlayerMovement : MonoBehaviour
         HandleDash();
         HandleOpacity();
         HandleHeight();
-        UpdateAnimations(); // new
+        UpdateAnimations();
     }
 
     void FixedUpdate()
