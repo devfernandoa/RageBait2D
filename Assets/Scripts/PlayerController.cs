@@ -45,6 +45,8 @@ public class PlayerMovement : MonoBehaviour
     public float tracerFadeDuration = 0.5f; // Time in seconds for the tracer to fade out
     private float tracerSpawnTimer;
 
+    private Animator animator;
+
     private SpriteRenderer playerSpriteRenderer; // Reference to the player's SpriteRenderer
 
     void Start()
@@ -53,7 +55,9 @@ public class PlayerMovement : MonoBehaviour
         groundCheck = transform.Find("GroundCheck"); // Create an empty GameObject for ground checking
 
         // Get the player's SpriteRenderer component
-        playerSpriteRenderer = GetComponent<SpriteRenderer>();
+        playerSpriteRenderer = GetComponentInChildren<SpriteRenderer>();
+
+        animator = GetComponentInChildren<Animator>();
     }
 
     void Update()
@@ -62,6 +66,7 @@ public class PlayerMovement : MonoBehaviour
         HandleDash();
         HandleOpacity();
         HandleHeight();
+        UpdateAnimations(); // new
     }
 
     void FixedUpdate()
@@ -82,6 +87,29 @@ public class PlayerMovement : MonoBehaviour
         {
             rb.linearVelocity = new Vector2(rb.linearVelocity.x, -maxVerticalSpeed);
         }
+
+        Vector3 scale = transform.localScale;
+
+        if (rb.linearVelocity.x > 0.1f)
+        {
+            scale.x = Mathf.Abs(scale.x);
+        }
+        else if (rb.linearVelocity.x < -0.1f)
+        {
+            scale.x = -Mathf.Abs(scale.x);
+        }
+
+        transform.localScale = scale;
+    }
+
+    void UpdateAnimations()
+    {
+        float speed = Mathf.Abs(rb.linearVelocity.x);
+        float verticalVelocity = rb.linearVelocity.y;
+
+        animator.SetFloat("Speed", speed);
+        animator.SetBool("IsGrounded", isGrounded);
+        animator.SetFloat("VerticalVelocity", verticalVelocity);
     }
 
     void HandleHeight()
