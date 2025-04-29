@@ -78,7 +78,7 @@ public class PlayerMovement : MonoBehaviour
             rb.linearVelocity = new Vector2(Mathf.SmoothDamp(rb.linearVelocity.x, targetVelocity, ref velocityXSmoothing, accelerationTime), rb.linearVelocity.y);
         }
 
-        // Max speed clamping for vertical
+        // Max speed clamping for vertical 
         if (rb.linearVelocity.y > maxVerticalSpeed)
         {
             rb.linearVelocity = new Vector2(rb.linearVelocity.x, maxVerticalSpeed);
