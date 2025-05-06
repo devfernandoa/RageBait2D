@@ -45,6 +45,10 @@ public class PlayerMovement : MonoBehaviour
     public float tracerFadeDuration = 0.5f; // Time in seconds for the tracer to fade out
     private float tracerSpawnTimer;
 
+    [Header("Audio Settings")]
+    public AudioClip jumpSound; // Sound effect for jumping
+    public AudioClip dashSound; // Sound effect for dashing
+
     private Animator animator;
 
     private SpriteRenderer playerSpriteRenderer; // Reference to the player's SpriteRenderer
@@ -217,6 +221,8 @@ public class PlayerMovement : MonoBehaviour
             rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
             jumpBufferCounter = 0; // Reset the buffer after jumping
             coyoteTimeCounter = 0; // Prevent double jumping
+
+            AudioManager.Instance.PlayJumpSound(jumpSound); // Play jump sound
         }
     }
 
@@ -226,6 +232,8 @@ public class PlayerMovement : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.X) && canDash && !isDashing && !isGrounded)
         {
             StartDash();
+
+            AudioManager.Instance.PlayDashSound(dashSound); // Play dash sound
         }
 
         // Handle dash duration

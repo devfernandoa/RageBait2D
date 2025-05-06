@@ -26,6 +26,10 @@ public class AudioManager : MonoBehaviour
 
     private bool isTransitioning = false;
 
+    [Header("SFX Settings")]
+    public AudioSource sfxSource; // A separate audio source for sound effects
+
+
     void Awake()
     {
         if (Instance == null)
@@ -251,4 +255,20 @@ public class AudioManager : MonoBehaviour
             primarySource.loop = true;
         }
     }
+    public void PlayJumpSound(AudioClip clip)
+    {
+        if (clip != null && sfxSource != null)
+        {
+            sfxSource.PlayOneShot(clip);
+        }
+    }
+
+    public void PlayDashSound(AudioClip clip)
+    {
+        if (clip != null && sfxSource != null)
+        {
+            sfxSource.PlayOneShot(clip);
+        }
+    }
+
 }
