@@ -262,6 +262,8 @@ MonoBehaviour:
   tracerSpawnInterval: 0.05
   tracerHeightVariation: 0.2
   tracerFadeDuration: 0.5
+  jumpSound: {fileID: 0}
+  dashSound: {fileID: 0}
 --- !u!58 &4247209272977219064
 CircleCollider2D:
   m_ObjectHideFlags: 0
