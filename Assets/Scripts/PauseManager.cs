@@ -86,4 +86,10 @@ public class PauseManager : MonoBehaviour
 
         SceneManager.LoadScene("MainMenu"); // Replace with your main menu scene name
     }
+
+    public void QuitGame()
+    {
+        Application.Quit();
+    }
+
 }
