@@ -8,6 +8,13 @@ public class PlayerMovement : MonoBehaviour
     public float heightC = 20f; // Height for zone C
     private float currentHeight;
     private string currentZone;
+
+    [Header("Gravity Settings")]
+    public float normalGravity = 5f; // Normal gravity scale for zones A and B
+    public float lowGravity = 2f; // Reduced gravity for zone C
+    public float gravityTransitionSpeed = 2f; // How quickly gravity changes between zones
+    private float targetGravity;
+
     [Header("Movement Settings")]
     public float moveSpeed = 8f; // Horizontal movement speed
     public float jumpForce = 12f; // Jump force
@@ -57,10 +64,7 @@ public class PlayerMovement : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         groundCheck = transform.Find("GroundCheck"); // Create an empty GameObject for ground checking
-
-        // Get the player's SpriteRenderer component
         playerSpriteRenderer = GetComponentInChildren<SpriteRenderer>();
-
         animator = GetComponentInChildren<Animator>();
     }
 
@@ -71,6 +75,7 @@ public class PlayerMovement : MonoBehaviour
         HandleOpacity();
         HandleHeight();
         UpdateAnimations();
+        UpdateGravity();
     }
 
     void FixedUpdate()
@@ -106,6 +111,12 @@ public class PlayerMovement : MonoBehaviour
         transform.localScale = scale;
     }
 
+    void UpdateGravity()
+    {
+        // Smoothly transition to the target gravity
+        rb.gravityScale = Mathf.Lerp(rb.gravityScale, targetGravity, gravityTransitionSpeed * Time.deltaTime);
+    }
+
     void UpdateAnimations()
     {
         float speed = Mathf.Abs(rb.linearVelocity.x);
@@ -121,7 +132,7 @@ public class PlayerMovement : MonoBehaviour
         currentHeight = transform.position.y;
 
         // Check if the player has stopped falling (vertical velocity is close to zero)
-        bool hasStoppedFalling = Mathf.Abs(rb.linearVelocity.y) < 0.1f;
+        bool hasStoppedFalling = Mathf.Abs(rb.velocity.y) < 0.1f;
 
         // Determine the current height zone
         if (currentHeight < heightB)
@@ -141,6 +152,7 @@ public class PlayerMovement : MonoBehaviour
                     }
 
                     currentZone = "A";
+                    targetGravity = normalGravity;
                 }
             }
         }
@@ -161,6 +173,7 @@ public class PlayerMovement : MonoBehaviour
                     }
 
                     currentZone = "B";
+                    targetGravity = normalGravity;
                 }
             }
         }
@@ -177,6 +190,7 @@ public class PlayerMovement : MonoBehaviour
                     }
 
                     currentZone = "C";
+                    targetGravity = lowGravity;
                 }
             }
         }
