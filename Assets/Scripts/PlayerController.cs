@@ -132,7 +132,7 @@ public class PlayerMovement : MonoBehaviour
         currentHeight = transform.position.y;
 
         // Check if the player has stopped falling (vertical velocity is close to zero)
-        bool hasStoppedFalling = Mathf.Abs(rb.velocity.y) < 0.1f;
+        bool hasStoppedFalling = Mathf.Abs(rb.linearVelocity.y) < 0.1f;
 
         // Determine the current height zone
         if (currentHeight < heightB)
