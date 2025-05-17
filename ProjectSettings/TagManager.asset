@@ -3,8 +3,7 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 3
-  tags:
-  - Ground
+  tags: []
   layers:
   - Default
   - TransparentFX
@@ -12,14 +11,14 @@ TagManager:
   - 
   - Water
   - UI
-  - Ground
-  - BG1
-  - BG2
-  - BG3
-  - BG4
-  - BG5
-  - BG6
-  - BG7
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
   - 
   - 
   - 
@@ -41,20 +40,6 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
-    locked: 0
-<<<<<<< HEAD
-  - name: BG
-    uniqueID: 1295217029
-    locked: 0
-  - name: Map
-    uniqueID: 2640445301
-    locked: 0
-  - name: F
-    uniqueID: 70874919
-=======
-  - name: Estrelas
-    uniqueID: 2554088129
->>>>>>> e844faa2e331e4e6860733e9711639e6504fd95b
     locked: 0
   m_RenderingLayers:
   - Default
