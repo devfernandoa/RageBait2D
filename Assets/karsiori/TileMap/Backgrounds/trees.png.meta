@@ -1,10 +1,16 @@
 fileFormatVersion: 2
-guid: 63936729563fb4541b187aeddeae3f4a
+guid: 8dbe4694e034c644f846ec5177940a15
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 6619048852791699718
-    second: ChatGPT Image May 15, 2025, 03_55_06 PM_0
+      213: -1673732733077124514
+    second: trees_0
+  - first:
+      213: 3611188691014843535
+    second: trees_1
+  - first:
+      213: 2249915519335348110
+    second: trees_2
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -109,17 +115,43 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WindowsStoreApps
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: ChatGPT Image May 15, 2025, 03_55_06 PM_0
+      name: trees_0
       rect:
         serializedVersion: 2
-        x: 161
-        y: 88
-        width: 720
-        height: 795
+        x: 39
+        y: 151
+        width: 276
+        height: 487
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -128,8 +160,52 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 6092b95ccd59bdb50800000000000000
-      internalID: 6619048852791699718
+      spriteID: e5a8ef372f4b5c8e0800000000000000
+      internalID: -1673732733077124514
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: trees_1
+      rect:
+        serializedVersion: 2
+        x: 107
+        y: 64
+        width: 582
+        height: 955
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f8cf8d84bf48d1230800000000000000
+      internalID: 3611188691014843535
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: trees_2
+      rect:
+        serializedVersion: 2
+        x: 707
+        y: 146
+        width: 305
+        height: 777
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e873f988e3e493f10800000000000000
+      internalID: 2249915519335348110
       vertices: []
       indices: 
       edges: []
@@ -147,7 +223,10 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      trees_0: -1673732733077124514
+      trees_1: 3611188691014843535
+      trees_2: 2249915519335348110
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -9,17 +9,17 @@ TagManager:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Ground
   - Water
   - UI
-  - Ground
-  - BG1
-  - BG2
-  - BG3
-  - BG4
-  - BG5
-  - BG6
-  - BG7
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
   - 
   - 
   - 
@@ -41,9 +41,6 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
-    locked: 0
-  - name: Estrelas
-    uniqueID: 2554088129
     locked: 0
   m_RenderingLayers:
   - Default
