@@ -1,87 +1,76 @@
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using TMPro;
 
 public class TileTipTrigger : MonoBehaviour
 {
     public Tilemap tipTilemap;
-    public GameObject tipUI; // Now referencing the GameObject directly
-    public float fadeDuration = 0.5f;
+    public GameObject tipUI;
+    public float fadeDuration = 0.3f; // Adjustable in Inspector
 
-    private CanvasGroup tipUICanvasGroup;
-    private bool isShowingTip = false;
-    private Coroutine currentFadeCoroutine;
+    private TMP_Text[] tipTexts;
+    private Coroutine fadeRoutine;
 
     void Start()
     {
-        // Get or add CanvasGroup for fading
-        tipUICanvasGroup = tipUI.GetComponent<CanvasGroup>();
-        if (tipUICanvasGroup == null)
-        {
-            tipUICanvasGroup = tipUI.AddComponent<CanvasGroup>();
-        }
+        // Get all TextMeshPro components
+        tipTexts = tipUI.GetComponentsInChildren<TMP_Text>();
 
-        // Start with UI hidden
-        tipUICanvasGroup.alpha = 0f;
+        // Start hidden
+        SetTextAlpha(0f);
         tipUI.SetActive(false);
     }
 
-    void Update()
+    private void OnTriggerEnter2D(Collider2D other)
     {
-        Vector3 playerPos = transform.position;
-        Vector3Int cellPos = tipTilemap.WorldToCell(playerPos);
-
-        TileBase tile = tipTilemap.GetTile(cellPos);
-        if (tile is TipTile tipTile)
+        if (other == tipTilemap.GetComponent<Collider2D>())
         {
-            if (!isShowingTip)
-            {
-                ShowTipUI();
-            }
-        }
-        else
-        {
-            if (isShowingTip)
-            {
-                HideTipUI();
-            }
+            tipUI.SetActive(true);
+            FadeText(0f, 1f); // Fade in
         }
     }
 
-    private void ShowTipUI()
+    private void OnTriggerExit2D(Collider2D other)
     {
-        isShowingTip = true;
-        tipUI.SetActive(true);
-
-        if (currentFadeCoroutine != null)
+        if (other == tipTilemap.GetComponent<Collider2D>())
         {
-            StopCoroutine(currentFadeCoroutine);
+            FadeText(1f, 0f, () => tipUI.SetActive(false)); // Fade out then disable
         }
-        currentFadeCoroutine = StartCoroutine(FadeUI(0f, 1f));
     }
 
-    private void HideTipUI()
+    private void FadeText(float startAlpha, float targetAlpha, System.Action onComplete = null)
     {
-        isShowingTip = false;
+        // Stop any existing fade
+        if (fadeRoutine != null)
+            StopCoroutine(fadeRoutine);
 
-        if (currentFadeCoroutine != null)
-        {
-            StopCoroutine(currentFadeCoroutine);
-        }
-        currentFadeCoroutine = StartCoroutine(FadeUI(1f, 0f, () => tipUI.SetActive(false)));
+        fadeRoutine = StartCoroutine(FadeRoutine(startAlpha, targetAlpha, onComplete));
     }
 
-    private System.Collections.IEnumerator FadeUI(float startAlpha, float targetAlpha, System.Action onComplete = null)
+    private System.Collections.IEnumerator FadeRoutine(float startAlpha, float targetAlpha, System.Action onComplete)
     {
-        float elapsedTime = 0f;
+        SetTextAlpha(startAlpha);
 
-        while (elapsedTime < fadeDuration)
+        float elapsed = 0f;
+        while (elapsed < fadeDuration)
         {
-            elapsedTime += Time.deltaTime;
-            tipUICanvasGroup.alpha = Mathf.Lerp(startAlpha, targetAlpha, elapsedTime / fadeDuration);
+            float alpha = Mathf.Lerp(startAlpha, targetAlpha, elapsed / fadeDuration);
+            SetTextAlpha(alpha);
+            elapsed += Time.deltaTime;
             yield return null;
         }
 
-        tipUICanvasGroup.alpha = targetAlpha;
+        SetTextAlpha(targetAlpha);
         onComplete?.Invoke();
+    }
+
+    private void SetTextAlpha(float alpha)
+    {
+        foreach (TMP_Text text in tipTexts)
+        {
+            Color color = text.color;
+            color.a = alpha;
+            text.color = color;
+        }
     }
 }

@@ -5,12 +5,7 @@ public class MainMenu : MonoBehaviour
 {
     public void PlayGame()
     {
-        SceneManager.LoadScene("GameScene"); // Replace with your game scene name
-    }
-
-    public void OpenOptions()
-    {
-        // Hide main menu, show options menu
+        SceneManager.LoadScene("MainScene");
     }
 
     public void QuitGame()
