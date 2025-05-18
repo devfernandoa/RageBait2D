@@ -12044,7 +12044,7 @@ MonoBehaviour:
   m_Intensity: 1
   m_LightVolumeIntensity: 1
   m_LightVolumeEnabled: 0
-  m_ApplyToSortingLayers: 00000000
+  m_ApplyToSortingLayers: 00000000937a0540
   m_LightCookieSprite: {fileID: 0}
   m_DeprecatedPointLightCookieSprite: {fileID: 0}
   m_LightOrder: 0
@@ -20057,13 +20057,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1557654361}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.7071068, y: -0, z: -0, w: 0.7071068}
+  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 243, z: 0}
   m_LocalScale: {x: 1.1458, y: 1.1458, z: 1.1458}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 1630366673}
-  m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!199 &1557654363
 ParticleSystemRenderer:
   serializedVersion: 6
@@ -20106,7 +20106,7 @@ ParticleSystemRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: -1740879167
+  m_SortingLayerID: 1074100883
   m_SortingLayer: 1
   m_SortingOrder: 0
   m_RenderMode: 0
@@ -25339,7 +25339,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1630366670
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -26808,8 +26808,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: The end!
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 4995d084da534e242ba9e835e6f9e4e2, type: 2}
-  m_sharedMaterial: {fileID: -8337361322955495217, guid: 4995d084da534e242ba9e835e6f9e4e2, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -27080,8 +27080,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Restart
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 4995d084da534e242ba9e835e6f9e4e2, type: 2}
-  m_sharedMaterial: {fileID: -8337361322955495217, guid: 4995d084da534e242ba9e835e6f9e4e2, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
