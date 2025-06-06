@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;   // for Button
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -38,6 +39,14 @@ public class PlayerMovement : MonoBehaviour
     private bool canDash = true;
     private float dashTimeLeft; // Timer for dash duration
 
+    [Header("Mobile Controls (Joystick + Buttons)")]
+    public Joystick joystick;           // Assign in Inspector: the JoystickBG GameObject (with the Joystick.cs component).
+    public Button jumpButton;           // Assign in Inspector: the UI Button named “JumpButton”
+    public Button dashButton;           // Assign in Inspector: the UI Button named “DashButton”
+
+    private bool jumpButtonPressed = false;   // will be set true when the JumpButton is tapped
+    private bool dashButtonPressed = false;   // will be set true when the DashButton is tapped
+
     private float velocityXSmoothing;
     public float accelerationTime = 0.1f; // Time to reach full speed
 
@@ -66,6 +75,13 @@ public class PlayerMovement : MonoBehaviour
         groundCheck = transform.Find("GroundCheck"); // Create an empty GameObject for ground checking
         playerSpriteRenderer = GetComponentInChildren<SpriteRenderer>();
         animator = GetComponentInChildren<Animator>();
+
+        if (jumpButton != null)
+            jumpButton.onClick.AddListener(OnJumpButtonPressed);
+
+        // When dashButton is clicked, call OnDashButtonPressed()
+        if (dashButton != null)
+            dashButton.onClick.AddListener(OnDashButtonPressed);
     }
 
     void Update()
@@ -76,15 +92,31 @@ public class PlayerMovement : MonoBehaviour
         HandleHeight();
         UpdateAnimations();
         UpdateGravity();
+
+        jumpButtonPressed = false;
+        dashButtonPressed = false;
     }
 
     void FixedUpdate()
     {
         if (!isDashing)
         {
-            float moveInput = Input.GetAxisRaw("Horizontal");
+            // ─── REPLACE INPUT.GetAxisRaw WITH joystick.Horizontal ───────
+            float moveInput = 0f;
+            if (joystick != null)
+            {
+                moveInput = joystick.Horizontal; // reading from on‐screen joystick
+            }
+            else
+            {
+                moveInput = Input.GetAxisRaw("Horizontal"); // fallback for testing in Editor
+            }
+
             float targetVelocity = moveInput * moveSpeed;
-            rb.linearVelocity = new Vector2(Mathf.SmoothDamp(rb.linearVelocity.x, targetVelocity, ref velocityXSmoothing, accelerationTime), rb.linearVelocity.y);
+            rb.linearVelocity = new Vector2(
+                Mathf.SmoothDamp(rb.linearVelocity.x, targetVelocity, ref velocityXSmoothing, accelerationTime),
+                rb.linearVelocity.y
+            );
         }
 
         // Max speed clamping for vertical 
@@ -220,14 +252,10 @@ public class PlayerMovement : MonoBehaviour
         }
 
         // Update jump buffer counter
-        if (Input.GetButtonDown("Jump"))
-        {
-            jumpBufferCounter = jumpBufferTime; // Start the buffer when jump is pressed
-        }
+        if (jumpButtonPressed)
+            jumpBufferCounter = jumpBufferTime;
         else
-        {
-            jumpBufferCounter -= Time.deltaTime; // Decrease the buffer over time
-        }
+            jumpBufferCounter -= Time.deltaTime;
 
         // Handle jumping with both coyote time and jump buffering
         if (jumpBufferCounter > 0 && (isGrounded || coyoteTimeCounter > 0))
@@ -243,11 +271,10 @@ public class PlayerMovement : MonoBehaviour
     void HandleDash()
     {
         // Check if the player can dash and presses the X key
-        if (Input.GetKeyDown(KeyCode.X) && canDash && !isDashing && !isGrounded)
+        if (dashButtonPressed && canDash && !isDashing && !isGrounded)
         {
             StartDash();
-
-            AudioManager.Instance.PlayDashSound(dashSound); // Play dash sound
+            AudioManager.Instance.PlayDashSound(dashSound);
         }
 
         // Handle dash duration
@@ -278,8 +305,8 @@ public class PlayerMovement : MonoBehaviour
         dashTimeLeft = dashDuration;
 
         // Get the direction of the dash based on input
-        float horizontalInput = Input.GetAxisRaw("Horizontal");
-        float verticalInput = Input.GetAxisRaw("Vertical");
+        float horizontalInput = joystick != null ? joystick.Horizontal : Input.GetAxisRaw("Horizontal");
+        float verticalInput = joystick != null ? joystick.Vertical : Input.GetAxisRaw("Vertical");
 
         // Normalize the direction to ensure consistent dash speed
         Vector2 dashDirection = new Vector2(horizontalInput, verticalInput).normalized;
@@ -385,5 +412,21 @@ public class PlayerMovement : MonoBehaviour
             Gizmos.color = Color.red;
             Gizmos.DrawWireSphere(groundCheck.position, groundCheckRadius);
         }
+    }
+
+    /// <summary>
+    /// Called by the JumpButton’s OnClick event.
+    /// </summary>
+    public void OnJumpButtonPressed()
+    {
+        jumpButtonPressed = true;
+    }
+
+    /// <summary>
+    /// Called by the DashButton’s OnClick event.
+    /// </summary>
+    public void OnDashButtonPressed()
+    {
+        dashButtonPressed = true;
     }
 }

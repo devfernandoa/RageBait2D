@@ -61,6 +61,23 @@ public class HatCollectable : MonoBehaviour
 #endif
     }
 
+    public void CollectFromAd()
+    {
+        if (isCollected) return;
+
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
+        if (player != null)
+        {
+            AttachToPlayer(player.transform);
+            SaveCollectionState();
+        }
+        else
+        {
+            Debug.LogWarning("CollectFromAd(): Player not found. Cannot attach hat.");
+        }
+    }
+
+
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.CompareTag("Player") && !isCollected)
